@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=VT323&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+  />
+
+  <link rel="stylesheet" href="./css/main.css?v=2" />
+</head>
+<body>
+
+  <!-- HEADER: pantalla de titulos estilo TV -->
+  <header class="tv-header">
+    <div class="tv-header__dots" aria-hidden="true"></div>
+    <div class="tv-header__content">
+      <p class="tv-header__eyebrow">CANAL 6 · SPRINGFIELD</p>
+      <h1 class="tv-header__title">Springfield <span>Guide</span></h1>
+      <p class="tv-header__subtitle">La guía de canales para encontrar a cualquier vecino de Springfield</p>
+    </div>
+    <button id="darkModeToggle" class="knob knob--power" type="button" aria-pressed="false" title="Cambiar modo claro/oscuro">
+      <span class="knob__icon" aria-hidden="true">☾</span>
+      <span class="visually-hidden">Modo oscuro</span>
+    </button>
+  </header>
+
+  <main class="app">
+
+    <!-- CONTROL REMOTO: busqueda + filtros + orden -->
+    <section class="remote" aria-label="Buscador y filtros">
+      <div class="remote__row remote__row--search">
+        <label for="searchInput" class="visually-hidden">Buscar personaje por nombre</label>
+        <span class="remote__search-icon" aria-hidden="true">🔍</span>
+          <input
+            type="search"
+            id="searchInput"
+            class="input is-rounded remote__search"
+            placeholder="Buscar personaje... (ej: Homer, Bart, Flanders)"
+            autocomplete="off"
+          />
+      </div>
+
+      <div class="remote__row remote__row--controls">
+        <div class="field">
+          <label for="statusFilter">Estado</label>
+          <div class="select is-fullwidth">
+              <select id="statusFilter">
+                  <option value="all">Todos</option>
+                  <option value="Alive">Vivo</option>
+                  <option value="Deceased">Fallecido</option>
+                  <option value="Unknown">Desconocido</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="genderFilter">Género</label>
+          <div class="select is-fullwidth">
+              <select id="genderFilter">
+                  <option value="all">Todos</option>
+                  <option value="Male">Masculino</option>
+                  <option value="Female">Femenino</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="sortOrder">Ordenar A-Z</label>
+          <div class="select is-fullwidth">
+              <select id="sortOrder">
+                  <option value="none">Sin orden</option>
+                  <option value="asc">A → Z</option>
+                  <option value="desc">Z → A</option>
+              </select>
+          </div>
+        </div>
+
+        <button
+            id="clearFiltersBtn"
+            class="button is-warning is-light btn btn--ghost"
+            type="button">
+            Limpiar filtros
+        </button>
+      </div>
+    </section>
+
+    <!-- ESTADO: cargando / resultados -->
+    <section class="status-bar" aria-live="polite">
+      <p id="resultsCount" class="status-bar__count"></p>
+      <div id="loadingIndicator" class="loading" hidden>
+        <span class="loading__bar"></span>
+        <span id="loadingText">Sintonizando canal...</span>
+      </div>
+    </section>
+
+    <!-- GRILLA DE PERSONAJES -->
+    <section aria-label="Resultados">
+      <ul id="charactersGrid" class="grid"></ul>
+      <p id="emptyState" class="empty-state" hidden>📺 No se encontró señal para esa búsqueda. Probá con otro nombre.</p>
+    </section>
+
+    <!-- PAGINADO ESTILO DIAL DE CANALES -->
+    <nav class="pager" aria-label="Paginado de resultados" id="pagerNav" hidden>
+      <button id="firstPageBtn" class="pager__btn" type="button" title="Primera página">⏮</button>
+      <button id="prevPageBtn" class="pager__btn" type="button" title="Página anterior">◀</button>
+
+      <div class="pager__display">
+        <span class="pager__label">CANAL</span>
+        <span id="currentPageDisplay" class="pager__digits">01</span>
+        <span class="pager__of">/</span>
+        <span id="totalPagesDisplay" class="pager__digits pager__digits--muted">01</span>
+      </div>
+
+      <label for="pageSelect" class="visually-hidden">Ir a página específica</label>
+      <select id="pageSelect" class="pager__select"></select>
+
+      <button id="nextPageBtn" class="pager__btn" type="button" title="Página siguiente">▶</button>
+      <button id="lastPageBtn" class="pager__btn" type="button" title="Última página">⏭</button>
+    </nav>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Hecho con 💛 usando <a href="https://thesimpsonsapi.com/" target="_blank" rel="noopener">The Simpsons API</a> · Proyecto educativo, sin fines de lucro.</p>
+  </footer>
+
+<!-- MODAL DE DETALLE -->
+<div id="modalOverlay" class="character-modal-overlay" hidden>
+  <div class="character-modal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+    <button id="modalCloseBtn" class="character-modal__close" type="button" aria-label="Cerrar">✕</button>
+
+    <div class="character-modal__static" id="modalStatic" aria-hidden="true"></div>
+
+    <div class="character-modal__body">
+      <div class="character-modal__media">
+        <img id="modalImage" src="" alt="" />
+        <span id="modalStatusBadge" class="badge"></span>
+      </div>
+
+      <div class="character-modal__info">
+        <p class="character-modal__eyebrow">FICHA DE PERSONAJE</p>
+        <h2 id="modalName" class="character-modal__name"></h2>
+        <p id="modalOccupation" class="character-modal__occupation"></p>
+
+        <dl class="character-modal__facts">
+          <div>
+            <dt>Edad</dt>
+            <dd id="modalAge">—</dd>
+          </div>
+          <div>
+            <dt>Nacimiento</dt>
+            <dd id="modalBirthdate">—</dd>
+          </div>
+          <div>
+            <dt>Género</dt>
+            <dd id="modalGender">—</dd>
+          </div>
+          <div>
+            <dt>Estado</dt>
+            <dd id="modalStatus">—</dd>
+          </div>
+        </dl>
+
+        <div class="character-modal__phrases">
+          <h3>Frases célebres</h3>
+          <ul id="modalPhrasesList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
