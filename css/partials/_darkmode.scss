@@ -1,0 +1,56 @@
+@use 'variables' as *;
+
+body.dark-mode {
+  background: $color-paper-dark;
+  color: $color-gray-200;
+
+  .remote,
+  .card,
+  .character-modal,
+  .pager__select,
+  .field select {
+    background: $color-panel-dark;
+    color: $color-gray-200;
+    border-color: $color-gray-200;
+  }
+
+  .remote__search {
+    background: $color-ink-dark;
+    color: $color-gray-200;
+    border-color: $color-gray-200;
+
+    &::placeholder {
+      color: $color-gray-400;
+    }
+  }
+
+  .card__occupation,
+  .character-modal__occupation,
+  .empty-state,
+  .app-footer {
+    color: $color-gray-400;
+  }
+
+  .modal__facts {
+    background: $color-ink-dark;
+    border-color: $color-gray-200;
+  }
+
+  .character-modal__phrases li {
+    background: $color-ink-dark;
+  }
+
+  .btn,
+  .pager__btn,
+  .knob {
+    background: $color-panel-dark;
+    color: $color-gray-200;
+    border-color: $color-gray-200;
+    box-shadow: 3px 3px 0 0 $color-gray-200;
+  }
+
+  .knob {
+    background: $color-yellow;
+    color: $color-ink;
+  }
+}

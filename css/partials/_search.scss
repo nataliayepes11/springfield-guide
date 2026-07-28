@@ -1,0 +1,67 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.remote {
+  @include comic-panel;
+  background: $color-gray-100;
+  padding: $space-3;
+  margin-top: -$space-5;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  @include respond($bp-tablet) {
+    padding: $space-4;
+  }
+
+  &__row--search {
+    position: relative;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: $space-3;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    pointer-events: none;
+  }
+
+  &__search {
+    width: 100%;
+    padding: $space-3 $space-3 $space-3 2.6rem;
+    border: $border-thick;
+    border-radius: $radius-sm;
+    font-weight: 700;
+    font-size: 1.05rem;
+    background: $color-gray-200;
+    @include focus-ring;
+
+    &::placeholder {
+      color: $color-gray-600;
+      font-weight: 600;
+    }
+  }
+
+  &__row--controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-2;
+    align-items: end;
+
+    @include respond($bp-tablet) {
+      grid-template-columns: repeat(3, minmax(0, 160px)) auto;
+    }
+
+    .btn {
+      grid-column: 1 / -1;
+      justify-self: start;
+
+      @include respond($bp-tablet) {
+        grid-column: auto;
+      }
+    }
+  }
+}
