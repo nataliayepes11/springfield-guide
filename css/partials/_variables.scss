@@ -1,0 +1,50 @@
+// ===================================================
+// TOKENS DE DISEÑO — "Springfield Guide"
+// Paleta inspirada en la señal de TV de Los Simpson
+// ===================================================
+
+// Colores base
+$color-ink:        #1a1a2e; // negro-tinta para textos y contornos
+$color-paper:       #f7f2e2; // fondo tipo papel/pantalla vieja
+$color-yellow:      #ffd90f; // amarillo Springfield (acento principal)
+$color-blue:        #3f72af; // azul cielo de Springfield (secundario)
+$color-red:         #e4572e; // rojo Krusty (alertas / fallecido)
+$color-green:       #4e9f5b; // verde (vivo / éxito)
+
+// Modo oscuro
+$color-ink-dark:     #0f0f1a;
+$color-paper-dark:   #1e2030;
+$color-panel-dark:   #262a40;
+
+// Escala de grises
+$color-gray-100: #ffffff;
+$color-gray-200: #f0ece0;
+$color-gray-400: #b8b2a0;
+$color-gray-600: #6f6a5c;
+
+// Tipografía
+$font-display: 'Bangers', cursive;
+$font-body: 'Nunito', system-ui, sans-serif;
+$font-mono: 'VT323', monospace;
+
+// Radios y bordes
+$radius-sm: 6px;
+$radius-md: 14px;
+$radius-lg: 22px;
+$border-thick: 3px solid $color-ink;
+
+// Sombra tipo "viñeta de comic"
+@mixin comic-shadow($color: $color-ink, $x: 5px, $y: 5px) {
+  box-shadow: $x $y 0 0 $color;
+}
+
+// Espaciado
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 1rem;
+$space-4: 1.5rem;
+$space-5: 2.5rem;
+
+// Breakpoints
+$bp-tablet: 720px;
+$bp-desktop: 1080px;

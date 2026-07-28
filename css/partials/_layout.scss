@@ -1,0 +1,113 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.app {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: $space-4 $space-3 $space-5;
+}
+
+.status-bar {
+  @include flex-between($space-3);
+  flex-wrap: wrap;
+  margin-bottom: $space-3;
+  min-height: 2rem;
+
+  &__count {
+    font-family: $font-mono;
+    font-size: 1.35rem;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+}
+
+.loading {
+  @include flex-center($space-2);
+  font-family: $font-mono;
+  font-size: 1.2rem;
+
+  &__bar {
+    width: 90px;
+    height: 10px;
+    border: 2px solid $color-ink;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    background: $color-gray-200;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 40%;
+      background: $color-yellow;
+      animation: scan 1s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+.empty-state {
+  text-align: center;
+  font-family: $font-mono;
+  font-size: 1.4rem;
+  padding: $space-5 $space-3;
+  border: 2px dashed $color-gray-400;
+  border-radius: $radius-md;
+  color: $color-gray-600;
+}
+
+.app-footer {
+  text-align: center;
+  padding: $space-4;
+  font-size: 0.85rem;
+  color: $color-gray-600;
+
+  a {
+    color: $color-blue;
+    font-weight: 700;
+  }
+}
+
+.btn {
+  @include button-base;
+
+  &--ghost {
+    background: transparent;
+    box-shadow: none;
+    border-style: dashed;
+
+    &:hover:not(:disabled) {
+      background: $color-gray-200;
+      box-shadow: none;
+      transform: none;
+    }
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 800;
+    color: $color-gray-600;
+  }
+
+  select {
+    border: $border-thick;
+    border-radius: $radius-sm;
+    padding: $space-2;
+    background: $color-gray-100;
+    font-weight: 700;
+    @include focus-ring;
+  }
+}

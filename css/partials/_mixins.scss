@@ -1,0 +1,70 @@
+@use 'variables' as *;
+
+@mixin flex-center($gap: 0) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $gap;
+}
+
+@mixin flex-between($gap: 0) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $gap;
+}
+
+@mixin halftone-dots($color: rgba($color-ink, 0.12), $size: 14px) {
+  background-image: radial-gradient($color 1.5px, transparent 1.5px);
+  background-size: $size $size;
+}
+
+@mixin comic-panel {
+  border: $border-thick;
+  border-radius: $radius-md;
+  background: $color-gray-100;
+  @include comic-shadow();
+}
+
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 3px solid $color-blue;
+    outline-offset: 2px;
+  }
+}
+
+@mixin button-base {
+  font-family: $font-body;
+  font-weight: 700;
+  cursor: pointer;
+  border: $border-thick;
+  border-radius: $radius-sm;
+  padding: $space-2 $space-3;
+  background: $color-gray-100;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  @include comic-shadow($color-ink, 3px, 3px);
+  @include focus-ring;
+
+  &:hover:not(:disabled) {
+    transform: translate(-1px, -1px);
+    @include comic-shadow($color-ink, 4px, 4px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+@mixin respond($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
