@@ -1,0 +1,16 @@
+// ===================================================
+// main.scss — punto de entrada de estilos
+// Compilar con: sass css/main.scss css/main.css
+// (o con la extensión "Live Sass Compiler" de VSCode)
+// ===================================================
+
+@use 'partials/variables';
+@use 'partials/mixins';
+@use 'partials/reset';
+@use 'partials/layout';
+@use 'partials/header';
+@use 'partials/search';
+@use 'partials/cards';
+@use 'partials/pagination';
+@use 'partials/modal';
+@use 'partials/darkmode';
